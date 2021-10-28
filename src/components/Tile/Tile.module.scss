@@ -1,0 +1,19 @@
+.tile {
+    border-top: 1px solid gray;
+    border-right: 1px solid gray;
+    cursor: pointer;
+
+    &:first-of-type {
+        border-left: 1px solid gray;
+    }
+
+    &.tile_last_row {
+        border-bottom: 1px solid gray;
+    }
+
+    &.active_tile {
+        opacity: 0.35;
+    }
+}
+
+

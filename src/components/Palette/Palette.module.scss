@@ -1,0 +1,17 @@
+.container {
+    width: 300px;
+    padding: 50px;
+    overflow:scroll;
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+};
+
+.palette {
+    display: flex;
+    flex-direction: column;
+};
+
+.row {
+    display: flex;
+}
