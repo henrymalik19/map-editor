@@ -1,19 +1,18 @@
 .tile {
-    border-top: 1px solid gray;
-    border-right: 1px solid gray;
+    position: absolute;
     cursor: pointer;
+    
+    width: var(--tile-width);
+    height: var(--tile-height);
+    
+    top: var(--tile-position-y);
+    left: var(--tile-position-x);
+    border-top: var(--tile-border-top);
+    border-right: var(--tile-border-right);
+}
 
-    &:first-of-type {
-        border-left: 1px solid gray;
-    }
-
-    &.tile_last_row {
-        border-bottom: 1px solid gray;
-    }
-
-    &.active_tile {
-        opacity: 0.35;
-    }
+.tile_active {
+    border: 2px solid lightskyblue
 }
 
 
