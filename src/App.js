@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 // components
 import Palette from './components/Palette'
-// import Map from './components/Map'
+import Map from './components/Map'
 
 // styles
 import styles from './App.module.scss'
@@ -12,23 +12,24 @@ import tileset from './assets/tileset_32.png'
 const TILESET_SIZE = 32
 
 
-
 function App() {
-  const [activeTile, setActiveTile] = useState(null)
+  const [activeTile, setActiveTile] = useState({ x: null, y: null })
 
-  const handleSetActiveTile = (tile) => {
-    setActiveTile(tile)
-  }
+  const handleSetActiveTile = ({ target }) => {
+    const [x, y] = target.dataset.coordinates.split(',')
 
-  const handleOpenTileset = () => {
-
+    setActiveTile({ x: Number(x), y: Number(y) })
   }
 
   return (
     <div className={styles.container}>
       <main className={styles.content}>
-        <button onClick={handleOpenTileset}>Open Tileset</button>
-        <Palette tilesetSrc={tileset} tilesetSize={TILESET_SIZE} boundary={`.${styles.content}`} />
+        <Palette 
+          boundary={`.${styles.content}`} 
+          tilesetSrc={tileset} tilesetSize={TILESET_SIZE} 
+          activeTile={activeTile} handleSetActiveTile={handleSetActiveTile}
+        />
+        <Map activeTileCoordinates={activeTile} tilesetSrc={tileset} tilesetSize={TILESET_SIZE} />
       </main>
       <footer className={styles.footer}>
         <span>&copy; Map Editor </span>

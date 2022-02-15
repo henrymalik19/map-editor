@@ -1,8 +1,86 @@
 .container {
-    height: 100vh;
-    flex: 1;
-    border-left: 20px solid rgb(163, 163, 163);
+    position: relative;
+    width: 100%;
     overflow: scroll;
+    display: grid;
+    grid-template-areas: 
+        'layers layersPanel'
+         'layers mapCtrls';
+    justify-content: center;
+
+    .layers_container {
+        grid-area: layers;
+        position: relative;
+
+        display: grid;
+        grid-template-areas: 'canvas';
+
+        .canvas {
+            grid-area: canvas;
+            width: 896px;
+            height: 448px;
+            margin: 20px;
+            image-rendering: pixelated;
+            background-color: rgba(233, 233, 233, 1);
+            border: 1px solid black;
+
+            &:not(:first-of-type) {
+                background: transparent;
+            }
+
+            &.canvas_layer_hidden {
+                display: none;
+            }
+
+            &.canvas_layer_covered {
+                opacity: 0.65;
+                z-index: -1;
+            }
+        }
+
+        .tile_overlay { 
+            grid-area: canvas;
+            position: absolute;
+            margin: 20px;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    .layers_panel {
+        grid-area: layersPanel;
+        justify-self: center;
+        background-color:rgb(233, 233, 233);
+        border-radius: 5px;
+        width: 90px;
+        height: 50%;
+        margin-top: 20px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .layer_btn {
+            height: 25px;
+            width: 55px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: cornflowerblue;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.layer_btn_active {
+                background-color: rgb(56, 56, 56);
+            }
+        }
+    }
+
+    .map_ctrls {
+        grid-area: mapCtrls;
+    }
 }
 
 .map {

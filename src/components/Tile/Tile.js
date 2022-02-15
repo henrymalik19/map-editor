@@ -13,13 +13,13 @@ const setTileVars = (x, y, tilesetSize, isGridVisible) => ({
   "--tile-border-right": isGridVisible ? '1px solid black' : 'none'
 })
 
-function Tile({ x, y, tilesetSize, isGridVisible, isActiveTile, handleSetActiveTile }) {
+function Tile({ x, y, tilesetSize, isGridVisible, isActiveTile, handleClick }) {
   return (
     <div
       className={`${styles.tile} ${isActiveTile && styles.tile_active}`}
       style={setTileVars(x, y, tilesetSize, isGridVisible, isActiveTile)} 
       data-coordinates={`${x},${y}`} 
-      onClick={handleSetActiveTile}
+      onClick={handleClick}
     />
   )
 }

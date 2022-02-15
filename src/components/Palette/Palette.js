@@ -11,13 +11,12 @@ import { range } from '../../utils'
 // styles
 import styles from './Palette.module.scss'
 
-function Palette({ tilesetSrc, tilesetSize, boundary }) {
+function Palette({ tilesetSrc, tilesetSize, boundary, activeTile, handleSetActiveTile }) {
     const paletteRef = useRef()
     const [isGridVisible, setIsGridVisible] = useState(true)
     const [isMinimized, setIsMinimized] = useState(false)
     const [previousCoordinates, setPreviousCoordinates] = useState({ x: null, y: null })
     const [tilesetDimensions, setTilesetDimensions] = useState({ x: 0, y: 0 })
-    const [activeTile, setActiveTile] = useState({ x: null, y: null })
     
     const handleImgLoad = ({ target: img }) => {
         setTilesetDimensions({ x: (img.offsetWidth / tilesetSize), y: (img.offsetHeight / tilesetSize)})
@@ -25,12 +24,6 @@ function Palette({ tilesetSrc, tilesetSize, boundary }) {
 
     const handleToggleGrid = () => {
         setIsGridVisible(!isGridVisible)
-    }
-
-    const handleSetActiveTile = ({ target }) => {
-        const [x, y] = target.dataset.coordinates.split(',')
-
-        setActiveTile({ x: Number(x), y: Number(y) })
     }
 
     const handleToggleMinimized = () => {
@@ -43,7 +36,7 @@ function Palette({ tilesetSrc, tilesetSize, boundary }) {
             const newY = document.querySelector(boundary).clientHeight 
             const contentHeight = document.querySelector(`.${styles.header}`).offsetHeight
 
-            paletteRef.current.updatePosition({ x: 0, y: (newY - contentHeight)})
+            paletteRef.current.updatePosition({ x: 10, y: (newY - contentHeight)})
             paletteRef.current.updateSize({ width: '160px', height: '40px' })
         }
 
@@ -65,13 +58,15 @@ function Palette({ tilesetSrc, tilesetSize, boundary }) {
                 enableResizing={!isMinimized}
                 minWidth={isMinimized ? 160 : (tilesetSize * 10)}
                 minHeight={isMinimized ? 40 : (tilesetSize * 10)}
+                maxWidth={tilesetDimensions.x * tilesetSize}
+                maxHeight={(tilesetDimensions.y * tilesetSize) + 32} // 32 is header height
                 resizeGrid={[tilesetSize, tilesetSize]}
                 dragHandleClassName={styles.header}
         >
             <div className={`${styles.content} ${isMinimized ? styles.minimized : ''}`}>
                 <div className={`${styles.header} ${isMinimized ? styles.minimized : ''}`}>
                     <h3 className={styles.header_title}>Tileset</h3>
-                    <div className={styles.header_action_area}>
+                    <div className={`${styles.header_action_area} ${isMinimized ? styles.minimized : ''}`}>
                         <FontAwesomeIcon icon={isMinimized ? faWindowMaximize : faWindowMinimize} onClick={handleToggleMinimized} />
                         {!isMinimized && <FontAwesomeIcon icon={faThLarge} onClick={handleToggleGrid} />}
                     </div>
@@ -86,7 +81,7 @@ function Palette({ tilesetSrc, tilesetSize, boundary }) {
                                 tilesetSize={tilesetSize} 
                                 isGridVisible={isGridVisible} 
                                 isActiveTile={(x === activeTile.x) && (y === activeTile.y)}
-                                handleSetActiveTile={handleSetActiveTile}
+                                handleClick={handleSetActiveTile}
                             />
                         ))
                     ))}
